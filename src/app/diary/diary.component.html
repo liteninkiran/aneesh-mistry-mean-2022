@@ -1,5 +1,4 @@
 <h2>Welcome to the Diary</h2>
-
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -13,7 +12,7 @@
             <td>{{ diaryEntry.date }}</td>
             <td>{{ diaryEntry.entry }}</td>
             <td>
-                <button class="btn btn-light">Edit</button>
+                <button class="btn btn-light" (click)="onEdit(i)">Edit</button>
                 <button class="btn btn-danger" (click)="onDelete(i)">Delete</button>
             </td>
         </tr>

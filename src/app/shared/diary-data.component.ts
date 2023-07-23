@@ -22,4 +22,13 @@ export class DiaryDataService {
         this.diaryEntries.push(diaryEntry);
         this.diarySubject.next(this.diaryEntries);
     }
+
+    public onUpdateDiaryEntry(paramId:number, diaryEntry: DiaryEntry): void {
+        this.diaryEntries[paramId] = diaryEntry;
+        this.diarySubject.next(this.diaryEntries);
+    }
+
+    public getDiaryEntry(index: number): DiaryEntry {
+        return { ...this.diaryEntries[index] };
+    }
 }
