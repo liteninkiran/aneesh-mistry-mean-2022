@@ -13,8 +13,13 @@ export class DiaryDataService {
 
     public diarySubject = new Subject<DiaryEntry[]>();
 
-    public onDelete(index: number) {
+    public onDelete(index: number): void {
         this.diaryEntries.splice(index, 1);
+        this.diarySubject.next(this.diaryEntries);
+    }
+
+    public onAddDiaryEntry(diaryEntry: DiaryEntry): void {
+        this.diaryEntries.push(diaryEntry);
         this.diarySubject.next(this.diaryEntries);
     }
 }
