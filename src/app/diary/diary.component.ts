@@ -16,7 +16,15 @@ export class DiaryComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.diaryEntries = this.diaryDataService.diaryEntries;
+        this.updateArray();
     }
 
+    public onDelete(index: number): void {
+        this.diaryDataService.onDelete(index);
+        this.updateArray();
+    }
+
+    public updateArray():void {
+        this.diaryEntries = this.diaryDataService.diaryEntries;
+    }
 }
