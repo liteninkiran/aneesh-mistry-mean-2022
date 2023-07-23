@@ -5,8 +5,8 @@ import { DiaryEntry } from './diary-entry.model';
 export class DiaryDataService {
 
     diaryEntries: DiaryEntry[] = [
-        new DiaryEntry('Jan 1st', 'Entry 1', 'No Action'),
-        new DiaryEntry('Jan 2nd', 'Entry 2', 'No Action'),
+        new DiaryEntry('Jan 1st 2023', 'Entry 1'),
+        new DiaryEntry('Jan 2nd 2023', 'Entry 2'),
     ];
 
 }

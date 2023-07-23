@@ -9,15 +9,13 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>Jan 1st</td>
-            <td>Entry 1</td>
-            <td>No Action</td>
-        </tr>
-        <tr>
-            <td>Jan 2nd</td>
-            <td>Entry 2</td>
-            <td>No Action</td>
+        <tr *ngFor="let diaryEntry of diaryEntries">
+            <td>{{ diaryEntry.date }}</td>
+            <td>{{ diaryEntry.entry }}</td>
+            <td>
+                <button class="btn btn-light">Edit</button>
+                <button class="btn btn-danger">Delete</button>
+            </td>
         </tr>
     </tbody>
 </table>
