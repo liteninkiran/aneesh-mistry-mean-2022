@@ -4,6 +4,14 @@ const DiaryEntryModel = require('./entry-schema');
 const mongoose = require('mongoose');
 const app = express();
 
+mongoose.connect('mongodb+srv://admin:RLtPdWj28yI3mQZJ@mustercluster.0wrmhlo.mongodb.net/diarydb?retryWrites=true&w=majority')
+    .then(() => {
+        console.log('Connected');
+    })
+    .catch(() => {
+        console.log('Failed to connect');
+    });
+
 diaryEntries = [
     { id: 1, date: 'March 1st', entry: 'Archery' },
     { id: 2, date: 'March 2nd', entry: 'Swimming' },
