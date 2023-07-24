@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class DiaryDataService {
 
+    private baseUrl = 'http://localhost:3000';
+
     constructor(
         private http: HttpClient,
     ) {
@@ -21,8 +23,10 @@ export class DiaryDataService {
     }
 
     public onAddDiaryEntry(diaryEntry: DiaryEntry): void {
-        this.diaryEntries.push(diaryEntry);
-        this.diarySubject.next(this.diaryEntries);
+        const url = this.baseUrl + '/add-entry';
+        this.http.post<{ message: string }>(url, diaryEntry).subscribe((jsonData) => {
+            this.getDiaryEntries();
+        });
     }
 
     public onUpdateDiaryEntry(paramId:number, diaryEntry: DiaryEntry): void {
@@ -35,7 +39,7 @@ export class DiaryDataService {
     }
 
     public getDiaryEntries() {
-        const url = 'http://localhost:3000/diary-entries';
+        const url = this.baseUrl + '/diary-entries';
         this.http.get<{ diaryEntries: DiaryEntry[] }>(url).subscribe((jsonData) => {
             this.diaryEntries = jsonData.diaryEntries;
             this.diarySubject.next(this.diaryEntries);

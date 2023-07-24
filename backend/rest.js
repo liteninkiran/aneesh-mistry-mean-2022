@@ -1,5 +1,5 @@
 const express = require('express');
-
+const bodyParser = require('body-parser');
 const app = express();
 
 diaryEntries = [
@@ -8,6 +8,7 @@ diaryEntries = [
     { id: 3, date: 'March 3rd', entry: 'Football' },
 ];
 
+app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -15,11 +16,22 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/diary-entries', (req, res, next) => {
+app.get('/diary-entries', (req, res, next) => {
     res.json({
         diaryEntries,
     });
     res.send('Hello from Express');
 });
+app.post('/add-entry', (req, res) => {
+    diaryEntries.push({
+        id: req.body.id,
+        date: req.body.date,
+        entry: req.body.entry,
+    });
+    res.status(200).json({
+        message: 'Post submitted',
+    });
+});
+
 
 module.exports = app;
