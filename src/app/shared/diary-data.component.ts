@@ -6,9 +6,9 @@ import { Subject } from 'rxjs';
 export class DiaryDataService {
 
     public diaryEntries: DiaryEntry[] = [
-        new DiaryEntry('Jan 1st 2023', 'Entry 1'),
-        new DiaryEntry('Jan 2nd 2023', 'Entry 2'),
-        new DiaryEntry('Jan 5th 2023', 'BBQ!'),
+        new DiaryEntry(1, 'Jan 1st 2023', 'Entry 1'),
+        new DiaryEntry(2, 'Jan 2nd 2023', 'Entry 2'),
+        new DiaryEntry(3, 'Jan 5th 2023', 'BBQ!'),
     ];
 
     public diarySubject = new Subject<DiaryEntry[]>();
