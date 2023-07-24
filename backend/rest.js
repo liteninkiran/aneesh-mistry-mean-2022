@@ -33,13 +33,13 @@ app.get('/diary-entries', (req, res, next) => {
     });
 });
 
-
 // POST Diary Entries
 app.post('/add-entry', (req, res) => {
     const diaryEntry = new DiaryEntryModel({
         date: req.body.date,
         entry: req.body.entry,
     });
+    diaryEntry.save();
     console.log(diaryEntry);
     diaryEntries.push({
         id: req.body.id,
