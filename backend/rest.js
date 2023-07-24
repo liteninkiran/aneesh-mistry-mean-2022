@@ -28,8 +28,12 @@ app.use((req, res, next) => {
 
 // GET Diary Entries
 app.get('/diary-entries', (req, res, next) => {
-    res.json({
-        diaryEntries,
+    DiaryEntryModel.find()
+    .then((data) => {
+        res.json({ diaryEntries: data });
+    })
+    .catch(() => {
+        console.log('Error fetching entries');
     });
 });
 
@@ -39,18 +43,12 @@ app.post('/add-entry', (req, res) => {
         date: req.body.date,
         entry: req.body.entry,
     });
-    diaryEntry.save();
-    console.log(diaryEntry);
-    diaryEntries.push({
-        id: req.body.id,
-        date: req.body.date,
-        entry: req.body.entry,
-    });
-    res.status(200).json({
-        message: 'Post submitted',
-    });
+    diaryEntry.save().then(
+        res.status(200).json({
+            message: 'Post submitted',
+        })
+    );
 });
-
 
 // GET Max ID - Diary Entries
 app.get('/max-id', (req, res) => {
