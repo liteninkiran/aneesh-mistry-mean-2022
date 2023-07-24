@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class DiaryDataService {
 
+    public maxId: number;
     private baseUrl = 'http://localhost:3000';
 
     constructor(
@@ -17,15 +18,21 @@ export class DiaryDataService {
     public diarySubject = new Subject<DiaryEntry[]>();
     private diaryEntries: DiaryEntry[] = [];
 
-    public onDelete(index: number): void {
-        this.diaryEntries.splice(index, 1);
-        this.diarySubject.next(this.diaryEntries);
+    public onDelete(id: number): void {
+        const url = this.baseUrl + '/remove-entry/' + id;
+        this.http.delete<{ message: string }>(url).subscribe((jsonData) => {
+            this.getDiaryEntries();
+        });
     }
 
     public onAddDiaryEntry(diaryEntry: DiaryEntry): void {
-        const url = this.baseUrl + '/add-entry';
-        this.http.post<{ message: string }>(url, diaryEntry).subscribe((jsonData) => {
-            this.getDiaryEntries();
+        const getUrl = this.baseUrl + '/max-id';
+        const postUrl = this.baseUrl + '/add-entry';
+        this.http.get<{ maxId: number }>(getUrl).subscribe((jsonData) => {
+            diaryEntry.id = jsonData.maxId + 1;
+            this.http.post<{ message: string }>(postUrl, diaryEntry).subscribe((jsonData) => {
+                this.getDiaryEntries();
+            });
         });
     }
 

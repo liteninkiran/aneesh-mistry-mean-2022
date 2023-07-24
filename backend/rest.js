@@ -32,6 +32,23 @@ app.post('/add-entry', (req, res) => {
         message: 'Post submitted',
     });
 });
-
+app.get('/max-id', (req, res) => {
+    let max = 0;
+    for (let i = 0; i < diaryEntries.length; i++) {
+        if (diaryEntries[i].id > max) {
+            max = diaryEntries[i].id;
+        }
+    }
+    res.json({
+        maxId: max,
+    });
+});
+app.delete('/remove-entry/:id', (req, res) => {
+    const index = diaryEntries.findIndex(el => el.id == req.params.id);
+    diaryEntries.splice(index, 1);
+    res.status(200).json({
+        message: 'Post deleted',
+    });
+});
 
 module.exports = app;
