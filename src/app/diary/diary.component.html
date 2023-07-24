@@ -12,7 +12,7 @@
             <td>{{ diaryEntry.date }}</td>
             <td>{{ diaryEntry.entry }}</td>
             <td>
-                <button class="btn btn-light" (click)="onEdit(i)">Edit</button>
+                <button class="btn btn-light" (click)="onEdit(diaryEntry.id)">Edit</button>
                 <button class="btn btn-danger" (click)="onDelete(diaryEntry.id)">Delete</button>
             </td>
         </tr>

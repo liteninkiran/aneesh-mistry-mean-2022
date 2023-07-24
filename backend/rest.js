@@ -20,7 +20,6 @@ app.get('/diary-entries', (req, res, next) => {
     res.json({
         diaryEntries,
     });
-    res.send('Hello from Express');
 });
 app.post('/add-entry', (req, res) => {
     diaryEntries.push({
@@ -48,6 +47,17 @@ app.delete('/remove-entry/:id', (req, res) => {
     diaryEntries.splice(index, 1);
     res.status(200).json({
         message: 'Post deleted',
+    });
+});
+app.put('/update-entry/:id', (req, res) => {
+    const index = diaryEntries.findIndex(el => el.id == req.params.id);
+    diaryEntries[index] = {
+        id: req.body.id,
+        date: req.body.date,
+        entry: req.body.entry,
+    };
+    res.status(200).json({
+        message: 'Update completed',
     });
 });
 

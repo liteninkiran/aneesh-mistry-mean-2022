@@ -36,13 +36,16 @@ export class DiaryDataService {
         });
     }
 
-    public onUpdateDiaryEntry(paramId:number, diaryEntry: DiaryEntry): void {
-        this.diaryEntries[paramId] = diaryEntry;
-        this.diarySubject.next(this.diaryEntries);
+    public onUpdateDiaryEntry(id: number, diaryEntry: DiaryEntry): void {
+        const url = this.baseUrl + '/update-entry/' + id;
+        this.http.put<{ diaryEntries: DiaryEntry[] }>(url, diaryEntry).subscribe((jsonData) => {
+            this.getDiaryEntries();
+        });
     }
 
-    public getDiaryEntry(index: number): DiaryEntry {
-        return { ...this.diaryEntries[index] };
+    public getDiaryEntry(id: number): DiaryEntry {
+        const index = this.diaryEntries.findIndex(el => el.id == id);
+        return this.diaryEntries[index];
     }
 
     public getDiaryEntries() {
