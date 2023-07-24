@@ -65,11 +65,9 @@ app.get('/max-id', (req, res) => {
 
 // DELETE Diary Entries
 app.delete('/remove-entry/:id', (req, res) => {
-    const index = diaryEntries.findIndex(el => el.id == req.params.id);
-    diaryEntries.splice(index, 1);
-    res.status(200).json({
-        message: 'Post deleted',
-    });
+    DiaryEntryModel
+        .deleteOne({_id: req.params.id})
+        .then(res.status(200).json({ message: 'Post Deleted' }));
 });
 
 // PUT Diary Entries

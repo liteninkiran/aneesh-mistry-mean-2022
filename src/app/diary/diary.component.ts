@@ -32,11 +32,11 @@ export class DiaryComponent implements OnInit, OnDestroy {
         this.diarySubscription.unsubscribe();
     }
 
-    public onDelete(id: number): void {
+    public onDelete(id: string): void {
         this.diaryDataService.onDelete(id);
     }
 
-    public onEdit(id: number): void {
+    public onEdit(id: string): void {
         this.router.navigate(['edit', id]);
     }
 

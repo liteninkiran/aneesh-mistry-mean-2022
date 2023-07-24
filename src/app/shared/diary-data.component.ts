@@ -19,7 +19,7 @@ export class DiaryDataService {
     public diarySubject = new Subject<DiaryEntry[]>();
     private diaryEntries: DiaryEntry[] = [];
 
-    public onDelete(id: number): void {
+    public onDelete(id: string): void {
         const url = this.baseUrl + '/remove-entry/' + id;
         this.http.delete<{ message: string }>(url).subscribe((jsonData) => {
             this.getDiaryEntries();
@@ -29,7 +29,7 @@ export class DiaryDataService {
     public onAddDiaryEntry(diaryEntry: DiaryEntry): void {
         const getUrl = this.baseUrl + '/max-id';
         const postUrl = this.baseUrl + '/add-entry';
-        this.http.get<{ maxId: number }>(getUrl).subscribe((jsonData) => {
+        this.http.get<{ maxId: string }>(getUrl).subscribe((jsonData) => {
             diaryEntry.id = jsonData.maxId + 1;
             this.http.post<{ message: string }>(postUrl, diaryEntry).subscribe((jsonData) => {
                 this.getDiaryEntries();
@@ -37,14 +37,14 @@ export class DiaryDataService {
         });
     }
 
-    public onUpdateDiaryEntry(id: number, diaryEntry: DiaryEntry): void {
+    public onUpdateDiaryEntry(id: string, diaryEntry: DiaryEntry): void {
         const url = this.baseUrl + '/update-entry/' + id;
         this.http.put<{ diaryEntries: DiaryEntry[] }>(url, diaryEntry).subscribe((jsonData) => {
             this.getDiaryEntries();
         });
     }
 
-    public getDiaryEntry(id: number): DiaryEntry {
+    public getDiaryEntry(id: string): DiaryEntry {
         const index = this.diaryEntries.findIndex(el => el.id == id);
         return this.diaryEntries[index];
     }

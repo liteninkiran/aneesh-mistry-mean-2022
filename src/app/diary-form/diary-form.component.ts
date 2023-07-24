@@ -14,7 +14,7 @@ export class DiaryFormComponent implements OnInit {
     public diaryForm: FormGroup;
     public editMode = false;
     public diaryEntry: DiaryEntry;
-    public paramId: number;
+    public paramId: string;
 
     constructor(
         private diaryDataService: DiaryDataService,
@@ -28,7 +28,7 @@ export class DiaryFormComponent implements OnInit {
         this.activatedRoute.paramMap.subscribe(paramMap => {
             this.editMode = paramMap.has('id')
             if (this.editMode) {
-                this.paramId = +paramMap.get('id')!;
+                this.paramId = paramMap.get('id')!;
                 this.diaryEntry = this.diaryDataService.getDiaryEntry(this.paramId);
             }
         });
@@ -39,9 +39,9 @@ export class DiaryFormComponent implements OnInit {
     }
 
     public onSubmit() {
-        const newEntry = new DiaryEntry(1, this.diaryForm.value.date, this.diaryForm.value.entry);
+        const newEntry = new DiaryEntry('1', this.diaryForm.value.date, this.diaryForm.value.entry);
         if (this.editMode) {
-            newEntry.id = +this.paramId;
+            newEntry.id = this.paramId;
             this.diaryDataService.onUpdateDiaryEntry(this.paramId, newEntry);
         } else {
             this.diaryDataService.onAddDiaryEntry(newEntry);
