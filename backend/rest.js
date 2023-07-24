@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const DiaryEntryModel = require('./entry-schema');
+const mongoose = require('mongoose');
 const app = express();
 
 diaryEntries = [
@@ -16,12 +18,21 @@ app.use((req, res, next) => {
     next();
 });
 
+// GET Diary Entries
 app.get('/diary-entries', (req, res, next) => {
     res.json({
         diaryEntries,
     });
 });
+
+
+// POST Diary Entries
 app.post('/add-entry', (req, res) => {
+    const diaryEntry = new DiaryEntryModel({
+        date: req.body.date,
+        entry: req.body.entry,
+    });
+    console.log(diaryEntry);
     diaryEntries.push({
         id: req.body.id,
         date: req.body.date,
@@ -31,6 +42,9 @@ app.post('/add-entry', (req, res) => {
         message: 'Post submitted',
     });
 });
+
+
+// GET Max ID - Diary Entries
 app.get('/max-id', (req, res) => {
     let max = 0;
     for (let i = 0; i < diaryEntries.length; i++) {
@@ -42,6 +56,8 @@ app.get('/max-id', (req, res) => {
         maxId: max,
     });
 });
+
+// DELETE Diary Entries
 app.delete('/remove-entry/:id', (req, res) => {
     const index = diaryEntries.findIndex(el => el.id == req.params.id);
     diaryEntries.splice(index, 1);
@@ -49,6 +65,8 @@ app.delete('/remove-entry/:id', (req, res) => {
         message: 'Post deleted',
     });
 });
+
+// PUT Diary Entries
 app.put('/update-entry/:id', (req, res) => {
     const index = diaryEntries.findIndex(el => el.id == req.params.id);
     diaryEntries[index] = {
