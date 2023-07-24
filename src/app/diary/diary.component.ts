@@ -40,7 +40,7 @@ export class DiaryComponent implements OnInit, OnDestroy {
         this.router.navigate(['edit', index]);
     }
 
-    public updateArray():void {
-        this.diaryEntries = this.diaryDataService.diaryEntries;
+    public updateArray(): void {
+        this.diaryDataService.getDiaryEntries();
     }
 }

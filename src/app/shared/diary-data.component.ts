@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { DiaryEntry } from './diary-entry.model';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class DiaryDataService {
 
-    public diaryEntries: DiaryEntry[] = [
-        new DiaryEntry(1, 'Jan 1st 2023', 'Entry 1'),
-        new DiaryEntry(2, 'Jan 2nd 2023', 'Entry 2'),
-        new DiaryEntry(3, 'Jan 5th 2023', 'BBQ!'),
-    ];
+    constructor(
+        private http: HttpClient,
+    ) {
+
+    }
 
     public diarySubject = new Subject<DiaryEntry[]>();
+    private diaryEntries: DiaryEntry[] = [];
 
     public onDelete(index: number): void {
         this.diaryEntries.splice(index, 1);
@@ -30,5 +32,13 @@ export class DiaryDataService {
 
     public getDiaryEntry(index: number): DiaryEntry {
         return { ...this.diaryEntries[index] };
+    }
+
+    public getDiaryEntries() {
+        const url = 'http://localhost:3000/diary-entries';
+        this.http.get<{ diaryEntries: DiaryEntry[] }>(url).subscribe((jsonData) => {
+            this.diaryEntries = jsonData.diaryEntries;
+            this.diarySubject.next(this.diaryEntries);
+        });
     }
 }
