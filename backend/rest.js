@@ -4,7 +4,7 @@ const DiaryEntryModel = require('./entry-schema');
 const mongoose = require('mongoose');
 const app = express();
 
-mongoose.connect('mongodb+srv://admin:RLtPdWj28yI3mQZJ@mustercluster.0wrmhlo.mongodb.net/diarydb?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://<USER>:<PASSWORD>@mustercluster.0wrmhlo.mongodb.net/diarydb?retryWrites=true&w=majority')
     .then(() => {
         console.log('Connected');
     })
