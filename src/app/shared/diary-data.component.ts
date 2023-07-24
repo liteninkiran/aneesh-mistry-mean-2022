@@ -29,11 +29,8 @@ export class DiaryDataService {
     public onAddDiaryEntry(diaryEntry: DiaryEntry): void {
         const getUrl = this.baseUrl + '/max-id';
         const postUrl = this.baseUrl + '/add-entry';
-        this.http.get<{ maxId: string }>(getUrl).subscribe((jsonData) => {
-            diaryEntry.id = jsonData.maxId + 1;
-            this.http.post<{ message: string }>(postUrl, diaryEntry).subscribe((jsonData) => {
-                this.getDiaryEntries();
-            });
+        this.http.post<{ message: string }>(postUrl, diaryEntry).subscribe((jsonData) => {
+            this.getDiaryEntries();
         });
     }
 

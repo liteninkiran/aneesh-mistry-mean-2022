@@ -12,12 +12,6 @@ mongoose.connect('mongodb+srv://admin:RLtPdWj28yI3mQZJ@mustercluster.0wrmhlo.mon
         console.log('Failed to connect');
     });
 
-diaryEntries = [
-    { id: 1, date: 'March 1st', entry: 'Archery' },
-    { id: 2, date: 'March 2nd', entry: 'Swimming' },
-    { id: 3, date: 'March 3rd', entry: 'Football' },
-];
-
 app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -48,19 +42,6 @@ app.post('/add-entry', (req, res) => {
             message: 'Post submitted',
         })
     );
-});
-
-// GET Max ID - Diary Entries
-app.get('/max-id', (req, res) => {
-    let max = 0;
-    for (let i = 0; i < diaryEntries.length; i++) {
-        if (diaryEntries[i].id > max) {
-            max = diaryEntries[i].id;
-        }
-    }
-    res.json({
-        maxId: max,
-    });
 });
 
 // DELETE Diary Entries
