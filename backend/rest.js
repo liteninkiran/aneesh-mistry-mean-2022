@@ -72,14 +72,15 @@ app.delete('/remove-entry/:id', (req, res) => {
 
 // PUT Diary Entries
 app.put('/update-entry/:id', (req, res) => {
-    const index = diaryEntries.findIndex(el => el.id == req.params.id);
-    diaryEntries[index] = {
-        id: req.body.id,
+    const updatedEntry = new DiaryEntryModel({
+        _id: req.body.id,
         date: req.body.date,
         entry: req.body.entry,
-    };
-    res.status(200).json({
-        message: 'Update completed',
+    });
+    DiaryEntryModel.updateOne({ _id: req.body.id }, updatedEntry).then(() => {
+        res.status(200).json({
+            message: 'Update completed',
+        });
     });
 });
 

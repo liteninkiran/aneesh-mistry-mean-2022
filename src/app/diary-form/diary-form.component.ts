@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DiaryDataService } from '../shared/diary-data.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { DiaryEntry } from '../shared/diary-entry.model';
 
 @Component({
@@ -25,7 +25,7 @@ export class DiaryFormComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.activatedRoute.paramMap.subscribe(paramMap => {
+        this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
             this.editMode = paramMap.has('id')
             if (this.editMode) {
                 this.paramId = paramMap.get('id')!;
